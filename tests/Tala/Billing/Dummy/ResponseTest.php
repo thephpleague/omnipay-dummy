@@ -13,15 +13,19 @@ namespace Tala\Billing\Dummy;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @expectedException Tala\Exception\InvalidResponseException
+     */
+    public function testConstructEmpty()
+    {
+        $response = new Response('');
+    }
+
     public function testConstruct()
     {
-        $response1 = new Response;
-        $reference1 = $response1->getGatewayReference();
-        $this->assertStringMatchesFormat('%x', $reference1);
+        $response = new Response('abc123');
 
-        $response2 = new Response;
-        $reference2 = $response2->getGatewayReference();
-        $this->assertStringMatchesFormat('%x', $reference2);
-        $this->assertNotEquals($reference1, $reference2);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('abc123', $response->getGatewayReference());
     }
 }
