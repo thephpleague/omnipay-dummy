@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Billing\Dummy;
+namespace Omnipay\Dummy;
 
-use Omnipay\CreditCard;
+use Omnipay\Common\CreditCard;
 use Omnipay\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -38,7 +38,7 @@ class GatewayTest extends GatewayTestCase
     {
         $response = $this->gateway->authorize($this->options);
 
-        $this->assertInstanceOf('\Omnipay\Billing\Dummy\Response', $response);
+        $this->assertInstanceOf('\Omnipay\Dummy\Response', $response);
         $this->assertTrue($response->isSuccessful());
     }
 
@@ -46,7 +46,7 @@ class GatewayTest extends GatewayTestCase
     {
         $response = $this->gateway->purchase($this->options);
 
-        $this->assertInstanceOf('\Omnipay\Billing\Dummy\Response', $response);
+        $this->assertInstanceOf('\Omnipay\Dummy\Response', $response);
         $this->assertTrue($response->isSuccessful());
     }
 }
