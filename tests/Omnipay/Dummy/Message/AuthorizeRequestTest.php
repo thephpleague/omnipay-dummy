@@ -2,7 +2,7 @@
 
 namespace Omnipay\Dummy\Message;
 
-use Omnipay\TestCase;
+use Omnipay\Tests\TestCase;
 
 class AuthorizeRequestTest extends TestCase
 {
