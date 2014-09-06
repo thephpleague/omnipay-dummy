@@ -10,7 +10,7 @@
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/omnipay/dummy",
+    "homepage": "https://github.com/thephpleague/omnipay-dummy",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/dummy/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-dummy/contributors"
         }
     ],
     "autoload": {
