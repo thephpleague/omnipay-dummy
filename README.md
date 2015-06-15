@@ -33,6 +33,11 @@ The following gateways are provided by this package:
 
 * Dummy
 
+This is a dummy gateway driver intended for testing purposes. If you provide a card number ending in an even number, the driver will return a success response. If it ends in an odd number, the driver will return a generic failure response. For example:
+
+* 4929000000006 - Success
+* 4444333322221111 - Failure
+
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
 
