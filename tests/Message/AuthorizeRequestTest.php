@@ -26,7 +26,7 @@ class AuthorizeRequestTest extends TestCase
         $request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
         $request->initialize(array('amount' => '10.00'));
 
-        $this->setExpectedException('\Omnipay\Common\Exception\RuntimeException');
+        $this->setExpectedException('Omnipay\Common\Exception\RuntimeException');
         $request->getData();
     }
 }
