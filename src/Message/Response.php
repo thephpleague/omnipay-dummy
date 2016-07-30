@@ -6,6 +6,10 @@ use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * Dummy Response
+ *
+ * This is the response class for all Dummy requests.
+ *
+ * @see \Omnipay\Dummy\Gateway
  */
 class Response extends AbstractResponse
 {
