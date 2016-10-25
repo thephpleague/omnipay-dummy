@@ -23,6 +23,16 @@ class Response extends AbstractResponse
         return isset($this->data['reference']) ? $this->data['reference'] : null;
     }
 
+    public function getTransactionId()
+    {
+        return isset($this->data['reference']) ? $this->data['reference'] : null;
+    }
+
+    public function getCardReference()
+    {
+        return isset($this->data['reference']) ? $this->data['reference'] : null;
+    }
+
     public function getMessage()
     {
         return isset($this->data['message']) ? $this->data['message'] : null;

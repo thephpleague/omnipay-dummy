@@ -11,62 +11,118 @@ class GatewayTest extends GatewayTestCase
         parent::setUp();
 
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+    }
 
-        $this->options = array(
+    public function testAuthorize()
+    {
+        $options = array(
             'amount' => '10.00',
             'card' => $this->getValidCard(),
         );
+        $request= $this->gateway->authorize($options);
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\CreditCardRequest', $request);
+        $this->assertArrayHasKey('amount', $request->getData());
     }
 
-    public function testAuthorizeSuccess()
+    public function testPurchase()
     {
-        // card numbers ending in even number should be successful
-        $this->options['card']['number'] = '4242424242424242';
-        $response = $this->gateway->authorize($this->options)->send();
+        $options = array(
+            'amount' => '10.00',
+            'card' => $this->getValidCard(),
+        );
+        $request= $this->gateway->purchase($options);
 
-        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
-        $this->assertTrue($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNotEmpty($response->getTransactionReference());
-        $this->assertSame('Success', $response->getMessage());
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\CreditCardRequest', $request);
+        $this->assertArrayHasKey('amount', $request->getData());
     }
 
-    public function testAuthorizeFailure()
+    public function testCompleteAuthorize()
     {
-        // card numbers ending in odd number should be declined
-        $this->options['card']['number'] = '4111111111111111';
-        $response = $this->gateway->authorize($this->options)->send();
+        $options = array(
+            'transactionReference' => 'abc123'
+        );
+        $request= $this->gateway->completeAuthorize($options);
 
-        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNotEmpty($response->getTransactionReference());
-        $this->assertSame('Failure', $response->getMessage());
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\TransactionReferenceRequest', $request);
+        $this->assertArrayHasKey('transactionReference', $request->getData());
     }
 
-    public function testPurchaseSuccess()
+    public function testCapture()
     {
-        // card numbers ending in even number should be successful
-        $this->options['card']['number'] = '4242424242424242';
-        $response = $this->gateway->purchase($this->options)->send();
+        $options = array(
+            'transactionReference' => 'abc123'
+        );
+        $request= $this->gateway->capture($options);
 
-        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
-        $this->assertTrue($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNotEmpty($response->getTransactionReference());
-        $this->assertSame('Success', $response->getMessage());
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\TransactionReferenceRequest', $request);
+        $this->assertArrayHasKey('transactionReference', $request->getData());
     }
 
-    public function testPurcahseFailure()
+    public function testCompletePurchase()
     {
-        // card numbers ending in odd number should be declined
-        $this->options['card']['number'] = '4111111111111111';
-        $response = $this->gateway->purchase($this->options)->send();
+        $options = array(
+            'transactionReference' => 'abc123'
+        );
+        $request= $this->gateway->completePurchase($options);
 
-        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNotEmpty($response->getTransactionReference());
-        $this->assertSame('Failure', $response->getMessage());
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\TransactionReferenceRequest', $request);
+        $this->assertArrayHasKey('transactionReference', $request->getData());
+    }
+
+    public function testRefund()
+    {
+        $options = array(
+            'transactionReference' => 'abc123'
+        );
+        $request= $this->gateway->refund($options);
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\TransactionReferenceRequest', $request);
+        $this->assertArrayHasKey('transactionReference', $request->getData());
+    }
+
+    public function testVoid()
+    {
+        $options = array(
+            'transactionReference' => 'abc123'
+        );
+        $request= $this->gateway->void($options);
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\TransactionReferenceRequest', $request);
+        $this->assertArrayHasKey('transactionReference', $request->getData());
+    }
+
+    public function testCreateCard()
+    {
+        $options = array(
+            'amount' => '10.00',
+            'card' => $this->getValidCard(),
+        );
+        $request= $this->gateway->createCard($options);
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\CreditCardRequest', $request);
+        $this->assertArrayHasKey('amount', $request->getData());
+    }
+
+    public function testUpdateCard()
+    {
+        $options = array(
+            'cardReference' => 'abc123'
+        );
+        $request= $this->gateway->updateCard($options);
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\CardReferenceRequest', $request);
+        $this->assertArrayHasKey('cardReference', $request->getData());
+    }
+
+    public function testDeleteCard()
+    {
+        $options = array(
+            'cardReference' => 'abc123'
+        );
+        $request= $this->gateway->deleteCard($options);
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\CardReferenceRequest', $request);
+        $this->assertArrayHasKey('cardReference', $request->getData());
     }
 }
