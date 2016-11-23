@@ -49,8 +49,13 @@ class AuthorizeRequest extends AbstractRequest
     public function getData()
     {
         $this->validate('amount', 'card');
+        $card = $this->getCard();
 
-        $this->getCard()->validate();
+        if (!($card instanceof \Omnipay\Common\CreditCard)) {
+            throw new \Omnipay\Common\Exception\RuntimeException('No credit card object available');
+        }
+
+        $card->validate();
 
         return array('amount' => $this->getAmount());
     }

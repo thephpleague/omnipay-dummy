@@ -20,4 +20,13 @@ class AuthorizeRequestTest extends TestCase
         $data = $this->request->getData();
         $this->assertSame('10.00', $data['amount']);
     }
+
+    public function testGetDataException()
+    {
+        $request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
+        $request->initialize(array('amount' => '10.00'));
+
+        $this->setExpectedException('Omnipay\Common\Exception\RuntimeException');
+        $request->getData();
+    }
 }
