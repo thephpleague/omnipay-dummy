@@ -1,14 +1,13 @@
 <?php namespace Omnipay\Dummy\Message;
 
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\ResponseInterface;
+
 /**
  * Dummy UpdateCard/DeleteCard Request
  *
  * This is the request that will be called for any transaction which submits a cardReference.
  */
-
-use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Common\Message\ResponseInterface;
-
 class CardReferenceRequest extends AbstractRequest
 {
 

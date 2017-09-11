@@ -26,6 +26,7 @@ use Omnipay\Common\AbstractGateway;
  *    A cardReference field is required. If the cardReference contains 'fail', the
  *    request fails. For all other values, it succeeds.
  *
+ * ### Example
  * <code>
  * // Create a gateway for the Dummy Gateway
  * // (routes to GatewayFactory::create)

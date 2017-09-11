@@ -1,15 +1,14 @@
 <?php namespace Omnipay\Dummy\Message;
 
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\ResponseInterface;
+
 /**
  * Dummy Authorize/Purchase Request
  *
  * This is the request that will be called for any transaction which submits a credit card,
  * including `authorize` and `purchase`
  */
-
-use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Common\Message\ResponseInterface;
-
 class CreditCardRequest extends AbstractRequest
 {
 
