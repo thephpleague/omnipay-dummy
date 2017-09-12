@@ -1,5 +1,4 @@
 <?php
-
 namespace Omnipay\Dummy\Message;
 
 use Omnipay\Common\Message\AbstractResponse;

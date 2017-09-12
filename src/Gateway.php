@@ -1,5 +1,4 @@
 <?php
-
 namespace Omnipay\Dummy;
 
 use Omnipay\Common\AbstractGateway;
