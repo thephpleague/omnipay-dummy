@@ -1,5 +1,4 @@
 <?php
-
 namespace Omnipay\Dummy\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
@@ -19,6 +18,16 @@ class Response extends AbstractResponse
     }
 
     public function getTransactionReference()
+    {
+        return isset($this->data['reference']) ? $this->data['reference'] : null;
+    }
+
+    public function getTransactionId()
+    {
+        return isset($this->data['reference']) ? $this->data['reference'] : null;
+    }
+
+    public function getCardReference()
     {
         return isset($this->data['reference']) ? $this->data['reference'] : null;
     }
