@@ -7,16 +7,24 @@ use Omnipay\Common\AbstractGateway;
 /**
  * Dummy Gateway
  *
- * This gateway is useful for testing. It simply authorizes any payment made using a valid
- * credit card number and expiry.
+ * This gateway is useful for testing. It implements all the functions listed in \Omnipay\Common\GatewayInterface
+ * and allows both successful and failed responses based on the input.
  *
- * Any card number which passes the Luhn algorithm and ends in an even number is authorized,
- * for example: 4242424242424242
+ * For authorize(), purchase(), and createCard() functions ...
  *
- * Any card number which passes the Luhn algorithm and ends in an odd number is declined,
- * for example: 4111111111111111
+ *    Any card number which passes the Luhn algorithm and ends in an even number is authorized,
+ *    for example: 4242424242424242
  *
- * ### Example
+ *    Any card number which passes the Luhn algorithm and ends in an odd number is declined,
+ *    for example: 4111111111111111
+ *
+ * For capture(), completeAuthorize(), completePurchase(), refund(), and void() functions...
+ *    A transactionReference option is required. If the transactionReference contains 'fail', the
+ *    request fails. For any other values, the request succeeds
+ *
+ * For updateCard() and deleteCard() functions...
+ *    A cardReference field is required. If the cardReference contains 'fail', the
+ *    request fails. For all other values, it succeeds.
  *
  * <code>
  * // Create a gateway for the Dummy Gateway
@@ -69,21 +77,93 @@ class Gateway extends AbstractGateway
      * Create an authorize request.
      *
      * @param array $parameters
-     * @return \Omnipay\Dummy\Message\AuthorizeRequest
+     * @return \Omnipay\Dummy\Message\CreditCardRequest
      */
     public function authorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Dummy\Message\AuthorizeRequest', $parameters);
+        return $this->createRequest('\Omnipay\Dummy\Message\CreditCardRequest', $parameters);
     }
 
     /**
      * Create a purchase request.
      *
      * @param array $parameters
-     * @return \Omnipay\Dummy\Message\AuthorizeRequest
+     * @return \Omnipay\Dummy\Message\CreditCardRequest
      */
     public function purchase(array $parameters = array())
     {
-        return $this->authorize($parameters);
+        return $this->createRequest('\Omnipay\Dummy\Message\CreditCardRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\ResponseInterface
+     */
+    public function completeAuthorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Dummy\Message\TransactionReferenceRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\ResponseInterface
+     */
+    public function capture(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Dummy\Message\TransactionReferenceRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\ResponseInterface
+     */
+    public function completePurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Dummy\Message\TransactionReferenceRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\ResponseInterface
+     */
+    public function refund(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Dummy\Message\TransactionReferenceRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\ResponseInterface
+     */
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Dummy\Message\TransactionReferenceRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\ResponseInterface
+     */
+    public function createCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Dummy\Message\CreditCardRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\ResponseInterface
+     */
+    public function updateCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Dummy\Message\CardReferenceRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\ResponseInterface
+     */
+    public function deleteCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Dummy\Message\CardReferenceRequest', $parameters);
     }
 }
