@@ -37,6 +37,6 @@
             "dev-master": "3.0.x-dev"
         }
     },
-    "minimum-stability": "rc",
+    "minimum-stability": "RC",
     "prefer-stable": true
 }
