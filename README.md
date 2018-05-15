@@ -11,21 +11,11 @@ processing library for PHP 5.3+. This package implements Dummy support for Omnip
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
-to your `composer.json` file:
+Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `omnipay/omnipay` and `omnipay/dummy` with Composer:
 
-```json
-{
-    "require": {
-        "omnipay/dummy": "~2.0"
-    }
-}
 ```
-
-And run composer to update your dependencies:
-
-    $ curl -s http://getcomposer.org/installer | php
-    $ php composer.phar update
+composer require omnipay/omnipay omnipay/stripe
+```
 
 ## Basic Usage
 
