@@ -14,7 +14,7 @@ processing library for PHP 5.3+. This package implements Dummy support for Omnip
 Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `league/omnipay` and `omnipay/dummy` with Composer:
 
 ```
-composer require league/omnipay omnipay/stripe
+composer require league/omnipay omnipay/dummy
 ```
 
 ## Basic Usage
