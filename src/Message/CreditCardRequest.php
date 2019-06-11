@@ -28,7 +28,7 @@ class CreditCardRequest extends AbstractRequest
     public function sendData($data)
     {
         if ($this->getCardReference()) {
-            $data['success'] = 0 === substr($this->getCardReference(), -1, 1) % 2;
+            $data['success'] = 0 === ((int)substr($this->getCardReference(), -1, 1)) % 2;
         } else {
             $data['success'] = 0 === substr($this->getCard()->getNumber(), -1, 1) % 2;
         }

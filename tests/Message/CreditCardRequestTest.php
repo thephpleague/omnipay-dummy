@@ -59,7 +59,7 @@ class CreditCardRequestTest extends TestCase
 
     public function testTokenSuccess()
     {
-        // card numbers ending in even number should be successful
+        // tokens ending in even number should be successful
         $options = array(
             'amount' => '10.00',
             'cardReference' => '6b34e45d-4015-4864-a8c5-cd7a2df7a3d4',
@@ -73,9 +73,25 @@ class CreditCardRequestTest extends TestCase
         $this->assertSame('Success', $response->getMessage());
     }
 
+    public function testNonNumericTokenSuccess()
+    {
+        // tokens ending in non-numeric string should be successful
+        $options = array(
+            'amount' => '10.00',
+            'cardReference' => 'c6acca78-1eb0-415b-a4ed-d766a59563cf',
+        );
+        $response = $this->gateway->authorize($options)->send();
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNotEmpty($response->getTransactionReference());
+        $this->assertSame('Success', $response->getMessage());
+    }
+
     public function testTokenFailure()
     {
-        // card numbers ending in even number should be successful
+        // tokens ending in odd number should be declined
         $options = array(
             'amount' => '10.00',
             'cardReference' => 'a9d7105f-cbdd-4984-8591-35b28b739e59',
