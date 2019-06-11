@@ -57,4 +57,36 @@ class CreditCardRequestTest extends TestCase
         $this->assertSame('Failure', $response->getMessage());
     }
 
+    public function testTokenSuccess()
+    {
+        // card numbers ending in even number should be successful
+        $options = array(
+            'amount' => '10.00',
+            'cardReference' => '6b34e45d-4015-4864-a8c5-cd7a2df7a3d4',
+        );
+        $response = $this->gateway->authorize($options)->send();
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNotEmpty($response->getTransactionReference());
+        $this->assertSame('Success', $response->getMessage());
+    }
+
+    public function testTokenFailure()
+    {
+        // card numbers ending in even number should be successful
+        $options = array(
+            'amount' => '10.00',
+            'cardReference' => 'a9d7105f-cbdd-4984-8591-35b28b739e59',
+        );
+        $response = $this->gateway->authorize($options)->send();
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNotEmpty($response->getTransactionReference());
+        $this->assertSame('Failure', $response->getMessage());
+    }
+
 }
