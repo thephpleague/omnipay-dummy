@@ -1,8 +1,8 @@
 <?php
+
 namespace Omnipay\Dummy\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Common\Message\ResponseInterface;
 
 /**
  * Dummy Authorize/Purchase Request
@@ -14,17 +14,26 @@ class CreditCardRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('amount', 'card');
+        if ($this->getCardReference()) {
+            $this->validate('amount', 'cardReference');
+        } else {
+            $this->validate('amount', 'card');
 
-        $this->getCard()->validate();
+            $this->getCard()->validate();
+        }
 
         return array('amount' => $this->getAmount());
     }
 
     public function sendData($data)
     {
+        if ($this->getCardReference()) {
+            $data['success'] = 0 === substr($this->getCardReference(), -1, 1) % 2;
+        } else {
+            $data['success'] = 0 === substr($this->getCard()->getNumber(), -1, 1) % 2;
+        }
+
         $data['reference'] = uniqid();
-        $data['success'] = 0 === substr($this->getCard()->getNumber(), -1, 1) % 2;
         $data['message'] = $data['success'] ? 'Success' : 'Failure';
 
         return $this->response = new Response($this, $data);
